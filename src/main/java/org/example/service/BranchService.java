@@ -1,77 +1,55 @@
 package org.example.service;
-import java.util.ArrayList;
 import java.util.List;
-import org.example.DTO.BranchDTO;
-import org.example.DTO.MenuDTO;
+
+import org.example.dto.BranchDto;
 import org.example.model.BranchModel;
-import org.example.model.BranchMenu;
-import org.example.model.MenuModel;
-import org.example.repository.BranchMenuRepository;
 import org.example.repository.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 @Service
-@Component
 public class BranchService
 {
-    @Autowired(required=true)
-    public BranchRepository repository;
     @Autowired
-     public BranchMenuRepository branchmenurepository;
+    public BranchRepository repository;
+
 
     //Get
-    public List<BranchModel> listAllbranch()
+    public List<BranchModel> listAll()
     {
         return repository.findAll();
     }
-    public BranchDTO getBranchbyid (Integer id , boolean MenuItems) {
 
-       BranchModel branchModel = null;
-        List<BranchMenu>  items = null;
-        if (MenuItems)
-        {
-            items = branchmenurepository.findAllByBranchId( id );
-        }
-        BranchDTO dto = new BranchDTO();
-
-        //set branch details
-        dto.setId(branchModel.getId());
-        dto.setBranch(branchModel.getBranch());
-        dto.setArea(branchModel.getArea());
-        dto.setPincode(branchModel.getPincode());
-
-        //get menu items
-        List<MenuDTO> menuDTOList = new ArrayList<>();
-
-        if(items != null) {
-            for (BranchMenu branch_menu : items) {
-                MenuModel menumodel = branch_menu.getMenumodel();
-
-                MenuDTO menuDTO = new MenuDTO();
-                menuDTO.setId(menumodel.getId());
-                menuDTO.setItem_name(menumodel.getItemName());
-                menuDTO.setItem_price(menumodel.getItemPrice());
-                menuDTO.setItem_quality(menumodel.getItemQuality());
-                menuDTO.setItem_description(menumodel.getItemDescription());
-
-                menuDTOList.add(menuDTO);
-            }
-            //set menu items
-            dto.setItems(menuDTOList);
-        }
-        return dto;
+    //getbyid
+    public BranchModel get(Integer branchId) {
+        return  repository. getById(branchId);
     }
-
-    public void savebranch(BranchModel branchModel) {
-        repository.save(branchModel);
-    }
-    public BranchModel getbranch(BranchModel id) {
-        return repository.save(id);
-    }
-    public void deletebranch(Integer id)
+    //post
+    public BranchModel add(BranchDto branchDto)
     {
-        repository.deleteById(id);
+        BranchModel branchModel = new BranchModel();
+        branchModel.setBranch(branchDto.getBranch());
+        branchModel.setPincode(branchDto.getPincode());
+        branchModel.setArea(branchDto.getArea());
+        return repository.save(branchModel);
+    }
+    //put
+    public BranchModel update(BranchModel branchModel) {
+        return repository.save(branchModel);
+    }
+    //delete
+    public void delete(Integer branchId)
+    {
+    repository.deleteById(branchId);
     }
 }
+
+
+
+
+
+
+
+
+
 

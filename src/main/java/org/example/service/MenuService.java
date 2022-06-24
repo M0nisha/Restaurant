@@ -1,41 +1,37 @@
 package org.example.service;
 import java.util.List;
+import org.example.dto.MenuDto;
+import org.example.model.BranchMenu;
 import org.example.model.MenuModel;
 import org.example.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 @Service
-@Component
 public class MenuService
 {
-    @Autowired(required=true)
-     MenuRepository repo;
+    @Autowired
+    public MenuRepository repo;
     //Get
     public List<MenuModel> listAllmenu() {
-
         return repo.findAll();
     }
-
-    public void savemenu(MenuModel menuModel) {
-
-        repo.save(menuModel);
+    public MenuModel add(MenuDto menuDto) {
+        MenuModel menuModel = new MenuModel();
+        menuModel.setItemName(menuDto.getItemName());
+        menuModel.setItemPrice(menuDto.getItemPrice());
+        menuModel.setItemQuantity(menuDto.getItemQuantity());
+        menuModel.setItemDescription(menuDto.getItemDescription());
+        return repo.save(menuModel);
+    }
+    public MenuModel getmenu(MenuModel menuModel) {
+        return repo.save(menuModel);
+    }
+    public void deletemenu(Integer menuId) {
+        repo.deleteById(menuId);
+    }
+    public List<Object> getmenuById(Integer menuId) {
+        return repo.getMenuItems(menuId);
     }
 
-    public MenuModel getmenu(MenuModel id) {
-
-        return repo.save(id);
-    }
-
-    public void deletemenu(Integer id) {
-
-        repo.deleteById(id);
-    }
-
-    public MenuModel getmenuById(Integer id) {
-
-        return repo.getById(id);
-
-    }
 }
 
