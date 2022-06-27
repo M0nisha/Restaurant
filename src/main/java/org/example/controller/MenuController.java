@@ -1,7 +1,6 @@
 package org.example.controller;
 import org.example.dto.MenuDto;
-import org.example.model.BranchMenu;
-import org.example.model.MenuModel;
+import org.example.model.Menu;
 import org.example.model.ResponseModel;
 import org.example.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,10 @@ public class MenuController {
     public MenuService menuService;
 
     @GetMapping("/")
-    public ResponseEntity<List<MenuModel>> list() {
+    public ResponseEntity<List<Menu>> list() {
         return ResponseEntity.ok().body(menuService.listAllmenu());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getid(@PathVariable Integer menuId) {
-        List<Object> menuModel = menuService.getmenuById(menuId);
-
-        return new ResponseEntity<>(menuModel, HttpStatus.OK);
-    }
 
     @PostMapping("/")
     public ResponseEntity<ResponseModel> add(@Valid @RequestBody MenuDto menuDto) {
@@ -35,7 +28,7 @@ public class MenuController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<?> update(@Valid @RequestBody MenuModel menuModel) {
+    public ResponseEntity<?> update(@Valid @RequestBody Menu menuModel) {
         menuService.getmenu(menuModel);
         return ResponseEntity.ok().body(menuModel);
     }
@@ -43,9 +36,5 @@ public class MenuController {
     public ResponseEntity<?> delete(@PathVariable Integer menuId) {
         menuService.deletemenu(menuId);
         return ResponseEntity.ok().body("Deleted successfully");
-    }
-    @GetMapping("/menu-items")
-    public ResponseEntity<?> getMenuItems(@RequestParam("menuId")  Integer menuId) {
-        return ResponseEntity.ok().body(menuService.getmenuById(menuId));
     }
 }

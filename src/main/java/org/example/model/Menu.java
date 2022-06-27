@@ -2,14 +2,12 @@ package org.example.model;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "menu_items")
-public class MenuModel
+public class Menu
 {
     @Id
     @Column(nullable = false)
@@ -21,5 +19,5 @@ public class MenuModel
     private String itemDescription;
     @ManyToOne
     @JoinColumn(name = "branch_model_branch_id")
-    private BranchModel branchModel;
+    private Branch branchModel;
 }

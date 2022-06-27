@@ -5,18 +5,20 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "branchs")
+@Table(name = "branchName")
 @Getter
 @Setter
-public class BranchModel  {
+public class Branch {
+
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer branchId;
-    private String branch;
+    private String branchName;
+
     private String area;
     private String pincode;
     @OneToMany(mappedBy = "branchModel")
-    private List<MenuModel> menu_items;
+    private List<Menu> menu_items;
 
 }

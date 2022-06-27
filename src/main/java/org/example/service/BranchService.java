@@ -1,8 +1,7 @@
 package org.example.service;
 import java.util.List;
-
 import org.example.dto.BranchDto;
-import org.example.model.BranchModel;
+import org.example.model.Branch;
 import org.example.repository.BranchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,35 +11,33 @@ public class BranchService
 {
     @Autowired
     public BranchRepository repository;
-
-
     //Get
-    public List<BranchModel> listAll()
+    public List<Branch> listAll()
     {
         return repository.findAll();
     }
 
     //getbyid
-    public BranchModel get(Integer branchId) {
-        return  repository. getById(branchId);
+    public Branch get(Integer branchId) {
+        return  repository. getById(branchId );
     }
     //post
-    public BranchModel add(BranchDto branchDto)
+    public Branch add(BranchDto branchDto)
     {
-        BranchModel branchModel = new BranchModel();
-        branchModel.setBranch(branchDto.getBranch());
-        branchModel.setPincode(branchDto.getPincode());
-        branchModel.setArea(branchDto.getArea());
-        return repository.save(branchModel);
+        Branch branch = new Branch();
+        branch.setBranchName(branchDto.getBranchName());
+        branch.setPincode(branchDto.getPincode());
+        branch.setArea(branchDto.getArea());
+        return repository.save(branch);
     }
     //put
-    public BranchModel update(BranchModel branchModel) {
-        return repository.save(branchModel);
+    public Branch update(Branch branch) {
+        return repository.save(branch);
     }
     //delete
-    public void delete(Integer branchId)
+    public void delete(Integer id)
     {
-    repository.deleteById(branchId);
+        repository.deleteById(id);
     }
 }
 
