@@ -1,10 +1,11 @@
 package org.example.exception;
 
+import lombok.Data;
 import org.springframework.http.HttpStatus;
-
+@Data
 public class APIResponse {
-
     private Integer status;
+    private String message;
     private Object data;
     private Object error;
 
@@ -12,6 +13,7 @@ public class APIResponse {
         this.status = HttpStatus.OK.value();
         this.data = data;
         this.error = error;
+        this.message=message;
     }
 
     public Integer getStatus() {
@@ -37,4 +39,5 @@ public class APIResponse {
     public void setError(Object error) {
         this.error = error;
     }
+
 }

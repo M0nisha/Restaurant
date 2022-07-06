@@ -2,7 +2,6 @@ package org.example.model;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-
 @Entity
 @Getter
 @Setter
@@ -14,10 +13,10 @@ public class Menu
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer menuId;
     private String itemName;
-    private String itemPrice;
-    private String itemQuantity;
+    private Integer itemPrice;
+    private Integer itemQuantity;
     private String itemDescription;
-    @ManyToOne
-    @JoinColumn(name = "branch_model_branch_id")
-    private Branch branchModel;
+//    @ManyToOne
+//    @JoinColumn(name = "branch_model_branch_id")
+//    private Branch branchModel;
 }

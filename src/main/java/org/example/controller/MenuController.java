@@ -1,40 +1,41 @@
 package org.example.controller;
 import org.example.dto.MenuDto;
+import org.example.exception.APIResponse;
 import org.example.model.Menu;
-import org.example.model.ResponseModel;
 import org.example.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.List;
-
+import java.util.Map;
 @RestController
 @RequestMapping("/api/menu")
 public class MenuController {
     @Autowired
     public MenuService menuService;
-
-    @GetMapping("/")
-    public ResponseEntity<List<Menu>> list() {
-        return ResponseEntity.ok().body(menuService.listAllmenu());
+    @GetMapping("/all")
+    public  ResponseEntity<Map<String, Object>> listAll( @RequestParam(defaultValue = "0")  int page ,
+                                                         @RequestParam(defaultValue = "16") int size  )
+//                                                         @RequestParam (defaultValue = "menuId") String SortBy)
+    {
+        return menuService.listAllMenu( page , size );
     }
 
-
-    @PostMapping("/")
-    public ResponseEntity<ResponseModel> add(@Valid @RequestBody MenuDto menuDto) {
-        return ResponseEntity.ok().body(new ResponseModel(menuService.add(menuDto)));
+    @PostMapping
+    public ResponseEntity<APIResponse> add(@Valid @RequestBody MenuDto menuDto) {
+        APIResponse apiResponse = menuService.add(menuDto);
+        return ResponseEntity.ok(apiResponse);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<?> update(@Valid @RequestBody Menu menuModel) {
-        menuService.getmenu(menuModel);
-        return ResponseEntity.ok().body(menuModel);
+    @PutMapping
+    public ResponseEntity<APIResponse> update(@Valid @RequestBody Menu menuModel) {
+        APIResponse apiResponse = menuService.getmenu(menuModel);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer menuId) {
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable Integer menuId)
+    {
         menuService.deletemenu(menuId);
-        return ResponseEntity.ok().body("Deleted successfully");
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,27 +1,22 @@
 package org.example.model;
-import lombok.Data;
-import lombok.Getter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
+import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
 
-@Data
+@Setter
+@ToString
+@AllArgsConstructor
 @Getter
 @Table
 @Entity
-public  class BranchMenu
-{
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  private Integer branchId;
-   private Integer menuId;
-   @LastModifiedBy
-   @Column(columnDefinition = "bigint default 1")
-   private LocalDateTime UpdatedAt;
-   @CreatedBy
-   @Column(columnDefinition = "bigint default 1", updatable = false)
-   private LocalDateTime createdBy;
-
+@NoArgsConstructor
+public class BranchMenu extends Auditable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+    @NotNull
+    private Long branchId;
+    @NotNull
+    private Integer menuId;
 }
+
