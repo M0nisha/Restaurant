@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class User extends  Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
     private String emailId;
     private String password;
     private  String name;

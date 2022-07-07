@@ -1,6 +1,5 @@
 package org.example.service;
 import org.example.exception.APIResponse;
-import org.example.model.Branch;
 import org.example.model.BranchMenu;
 import org.example.repository.BranchMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;

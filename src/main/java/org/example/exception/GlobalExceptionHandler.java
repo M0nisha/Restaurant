@@ -30,7 +30,6 @@ public class GlobalExceptionHandler {
         apiResponse.setMessage("failed");
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
-
     @ExceptionHandler
     public ResponseEntity<APIResponse> handleAccessDeniedException(AccessDeniedException e){
         APIResponse apiResponse = new APIResponse();

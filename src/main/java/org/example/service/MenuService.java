@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,35 +23,35 @@ public class MenuService {
     @Autowired
     public MenuRepository repo;
 
-//    @Autowired
-//    MenuTable menuTable;
 
     @Autowired
-     public  MenuTableRepository menuTableRepository;
+    public MenuTableRepository menuTableRepository;
 
     private Long timestamp = System.currentTimeMillis();
-    //Get
+
     public ResponseEntity<Map<String, Object>> listAllMenu(int page, int size) {
 
         Pageable paging = PageRequest.of(page, size);
         Page<Menu> menuPage = repo.findAll(paging);
-        List<Menu> allItems = new ArrayList<>();
+        List<Menu> allItems;
 
         if (timestamp > 10L) {
-            Stream<Menu> evenNumber = menuPage.stream().map(i -> {
+            Stream<Menu> hikedList = menuPage.stream().map(i -> {
                 if (i.getMenuId() % 2 == 0) {
                     i.setItemPrice(i.getItemPrice() * 3);
+                } else {
+                    i.setItemPrice(i.getItemPrice() * 4);
                 }
+                MenuTable menuTable = new MenuTable();
+                menuTable.setId(i.getMenuId());
+                menuTable.setDescription(i.getItemDescription());
+                menuTable.setName(i.getItemName());
+                menuTable.setPrice(i.getItemPrice());
+                menuTable.setQuantity(i.getItemQuantity());
+                menuTableRepository.save(menuTable);
                 return i;
             });
-
-            Stream<Menu> oddNumber = menuPage.stream().map((Menu i) -> {
-                if (i.getMenuId() % 2 != 0) {
-                    i.setItemPrice(i.getItemPrice() *4);
-                }
-                return i;
-            });
-            allItems = Stream.concat(oddNumber, evenNumber).collect(Collectors.toList());
+            allItems = hikedList.collect(Collectors.toList());
         } else {
             allItems = menuPage.getContent();
         }
@@ -66,7 +64,6 @@ public class MenuService {
         response.put("menuList", allItems);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     public APIResponse add(MenuDto menuDto) {
         APIResponse apiResponse = new APIResponse();
         Menu menuModel = new Menu();
@@ -79,8 +76,7 @@ public class MenuService {
         apiResponse.setData(menuModel);
         return apiResponse;
     }
-
-    public APIResponse getmenu(Menu menuModel) {
+    public APIResponse updateMenu(Menu menuModel) {
         APIResponse apiResponse = new APIResponse();
         Map<String, Object> data = new HashMap<>();
         menuModel = repo.save(menuModel);
@@ -88,7 +84,6 @@ public class MenuService {
         apiResponse.setData(menuModel);
         return apiResponse;
     }
-
     public void deletemenu(Integer menuId) {
         APIResponse apiResponse = new APIResponse();
         apiResponse.setMessage("Menu details deleted successfully");

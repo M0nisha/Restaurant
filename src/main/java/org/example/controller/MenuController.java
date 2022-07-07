@@ -16,7 +16,6 @@ public class MenuController {
     @GetMapping("/all")
     public  ResponseEntity<Map<String, Object>> listAll( @RequestParam(defaultValue = "0")  int page ,
                                                          @RequestParam(defaultValue = "16") int size  )
-//                                                         @RequestParam (defaultValue = "menuId") String SortBy)
     {
         return menuService.listAllMenu( page , size );
     }
@@ -29,9 +28,10 @@ public class MenuController {
 
     @PutMapping
     public ResponseEntity<APIResponse> update(@Valid @RequestBody Menu menuModel) {
-        APIResponse apiResponse = menuService.getmenu(menuModel);
+        APIResponse apiResponse = menuService.updateMenu(menuModel);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
+
     @DeleteMapping
     public ResponseEntity<?> delete(@PathVariable Integer menuId)
     {
