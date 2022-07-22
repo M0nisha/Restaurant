@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Update MenuItems</title>
+</head>
+<body>
+<div class="container">
+
+    <hr>
+    <h2>Update MenuItems </h2>
+
+    <form action="#" th:action="@{/update/{id}}" th:object="${menudto}"
+          method="post">
+
+        <div class="row">
+
+            <div class="form-group col-md-6">
+                <label for="itemName" class="col-form-label">ItemName</label>
+                <input type="text" th:field="*{itemName}" class="form-control" id="itemName" placeholder="itemName">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="itemPrice" class="col-form-label">ItemPrice</label>
+                <input type="text" th:field="*{itemPrice}" class="form-control" id="itemPrice" placeholder="itemPrice">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="itemQuantity" class="col-form-label">ItemQuantity</label>
+                <input type="text" th:field="*{itemQuantity}" class="form-control" id="itemQuantity"
+                       placeholder="itemQuantity">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="itemDescription" class="col-form-label">itemDescription</label>
+                <input type="text" th:field="*{itemDescription}" class="form-control" id="itemDescription"
+                       placeholder="itemDescription">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <input type="submit" class="btn btn-primary" value="Update MenuItems">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

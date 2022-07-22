@@ -16,9 +16,6 @@ public class MenuDto {
     @NotNull(message = " itemName is required ")
    @Pattern(regexp = "^[a-zA-Z/d]+$")
     private String itemName;
-//    @Pattern(regexp = "[/d]+")
-//   @NotEmpty(message = "itemPrice is required")
-//   @DecimalMax("10.0") @DecimalMin("0.0")
     @NotNull
    private Integer itemPrice;
     @NotNull
