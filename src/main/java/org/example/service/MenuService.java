@@ -2,7 +2,6 @@ package org.example.service;
 import org.example.dto.MenuDto;
 import org.example.exception.APIResponse;
 import org.example.model.Menu;
-import org.example.model.MenuTable;
 import org.example.repository.MenuRepository;
 import org.example.repository.MenuTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,10 @@ public class MenuService {
     @Autowired
     public MenuRepository repo;
 
-
     @Autowired
     public MenuTableRepository menuTableRepository;
 
-    private Long timestamp = System.currentTimeMillis();
+//    private Long timestamp = System.currentTimeMillis();
 
     public ResponseEntity<Map<String, Object>> listAllMenu(int page, int size) {
 
@@ -35,26 +33,19 @@ public class MenuService {
         Page<Menu> menuPage = repo.findAll(paging);
         List<Menu> allItems;
 
-        if (timestamp > 10L) {
+//        if (timestamp > 10L) {
             Stream<Menu> hikedList = menuPage.stream().map(i -> {
                 if (i.getMenuId() % 2 == 0) {
                     i.setItemPrice(i.getItemPrice() * 3);
                 } else {
                     i.setItemPrice(i.getItemPrice() * 4);
                 }
-                MenuTable menuTable = new MenuTable();
-                menuTable.setId(i.getMenuId());
-                menuTable.setDescription(i.getItemDescription());
-                menuTable.setName(i.getItemName());
-                menuTable.setPrice(i.getItemPrice());
-                menuTable.setQuantity(i.getItemQuantity());
-                menuTableRepository.save(menuTable);
                 return i;
             });
             allItems = hikedList.collect(Collectors.toList());
-        } else {
+
             allItems = menuPage.getContent();
-        }
+
         Map<String, Object> response = new HashMap<>();
         response.put("CurrentPage", menuPage.getNumber());
         response.put("TotalItems", menuPage.getTotalElements());
@@ -76,7 +67,8 @@ public class MenuService {
         apiResponse.setData(menuModel);
         return apiResponse;
     }
-    public APIResponse updateMenu(Menu menuModel) {
+    public APIResponse updateMenu(Menu menuModel)
+    {
         APIResponse apiResponse = new APIResponse();
         Map<String, Object> data = new HashMap<>();
         menuModel = repo.save(menuModel);
@@ -88,7 +80,9 @@ public class MenuService {
         APIResponse apiResponse = new APIResponse();
         apiResponse.setMessage("Menu details deleted successfully");
         repo.deleteById(menuId);
-    }
+//        return apiResponse;
+//    }
 
+    }
 }
 

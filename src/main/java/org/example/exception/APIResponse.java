@@ -1,5 +1,4 @@
 package org.example.exception;
-
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 @Data

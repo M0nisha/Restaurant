@@ -1,5 +1,4 @@
 package org.example.service;
-
 import org.example.dto.BranchDto;
 import org.example.exception.APIResponse;
 import org.example.model.Branch;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

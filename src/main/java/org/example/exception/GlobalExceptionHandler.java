@@ -1,9 +1,13 @@
 package org.example.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.validation.ConstraintViolationException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,11 +37,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<APIResponse> handleAccessDeniedException(AccessDeniedException e){
         APIResponse apiResponse = new APIResponse();
-        apiResponse.setError("UnAuthorized");
-        apiResponse.setMessage("Enter Valid Token");
+        apiResponse.setError("failed");
+        apiResponse.setMessage("User login failed");
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-       return ResponseEntity.status(401).body(apiResponse);
+       return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
+    @ExceptionHandler
+    ResponseEntity<?> customException(CustomException e){
+      APIResponse response = new APIResponse();
+      response.setError(e.getError().name());
+      response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+      response.setMessage("Simple Exception");
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler
+    String emailValException(ConstraintViolationException e, Model model) {
+        model.addAttribute("error", "INVALID_EMAIL");
+        return "signup";
+    }
+
 }
 
 

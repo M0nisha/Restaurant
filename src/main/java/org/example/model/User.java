@@ -1,31 +1,45 @@
 package org.example.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "Users")
-public class User extends  Auditable {
+@Entity
+@Table(name = "users")
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-    private String emailId;
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String username;
+
     private String password;
-    private  String name;
-   private Boolean isActive= true;
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private boolean enabled=true;
 
+    private String fullName;
 
+    public User() {
+    }
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    public User( String username, String password )  {
+        this.password = password;
+        this.username = username;
+
+    }
 }
+
 

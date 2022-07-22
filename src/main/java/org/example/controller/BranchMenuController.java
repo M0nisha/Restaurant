@@ -37,9 +37,5 @@ public class BranchMenuController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping
-//    public ResponseEntity<?> getmenuitems(@RequestParam("branchId") Integer branchId) {
-//        return ResponseEntity.ok().body(service.getmenuitems(branchId));
-//    }
 
 }
