@@ -1,0 +1,15 @@
+server:
+  port : "8080"
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/restdb"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    username: "monisha"
+    password: "Monisha@1234"
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+
+

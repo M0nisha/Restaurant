@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Add Some MenuItems </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<style>
+    .form-group span {
+      position: absolute;
+      color: red;
+      font-weight: bolder;
+      font-size: 14px;
+    }
+    #submit-error {
+      color: red;
+    }
+    .form-group span i{
+color:green;
+}
+</style>
+<body>
+<div class="container my-5">
+    <h2 class="mb-5">Menu List</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/menuList}" th:object="${menudto}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="itemName" class="col-form-label">ItemName</label>
+                        <input type="text" th:field="*{itemName}" class="form-control" id="itemName"
+                               onkeyup="validateItemName(this.value)"  placeholder="itemName" required autofocus>
+                        <span id="itemName-error"> </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="itemPrice" class="col-form-label">ItemPrice</label>
+                        <input type="number" th:field="*{itemPrice}" class="form-control" id="itemPrice"
+                             onkeyup="validateItemPrice(this.value)"     placeholder="itemPrice" required autofocus>
+                        <span id="itemPrice-error"> </span>
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="itemQuantity" class="col-form-label">ItemQuantity</label>
+                        <input type="number" th:field="*{itemQuantity}" class="form-control" id="itemQuantity"
+                            onkeyup="validateItemQuantity(this.value)"      placeholder="itemQuantity"  required autofocus>
+                        <span id="itemQuantity-error"> </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="itemDescription" class="col-form-label">itemDescription</label>
+                        <input type="text" th:field="*{itemDescription}" class="form-control" id="itemDescription"
+                              onkeyup="validateItemDescription(this.value)"  placeholder="itemDescription"   required
+                               autofocus>
+                        <span id="itemDescription-error"> </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input
+                                type="submit"
+                                onclick="validateForm();"
+                                class="btn btn-primary"
+                                value="Submit"
+                        />
+                        <span id="submit-error"> </span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</div>
+<script>
+var itemNameError = document.getElementById("itemName-error");
+var itemPriceError = document.getElementById("itemPrice-error");
+var itemQuantityError = document.getElementById("itemQuantity-error");
+var itemDescriptionError = document.getElementById("itemDescription-error");
+var submitError = document.getElementById("submit-error");
+
+function validateItemName() {
+var itemName = document.getElementById("itemName").value;
+if (itemName.length == 0) {
+itemNameError.innerHTML = "ItemName is required";
+return false;
+}
+if (!itemName.match(/[A_za-z]$/)) {
+itemNameError.innerHTML = "please Enter ItemName";
+return false;
+}
+itemNameError.innerHTML = '<i class="fas fa-check-circle"></i>';
+return true;
+}
+
+function validateItemPrice() {
+var itemPrice = document.getElementById("itemPrice").value;
+if (itemPrice.length == 0) {
+itemPriceError.innerHTML = "itemPrice is required";
+return false;
+}
+if (!itemPrice.match(/[0-9]+$/)) {
+itemPriceError.innerHTML = "please Enter  ItemPrice";
+return false;
+}
+itemPriceError.innerHTML = '<i class="fas fa-check-circle"></i>';
+return true;
+}
+
+function validateItemQuantity() {
+var itemQuantity = document.getElementById("itemQuantity").value;
+if (itemQuantity.length == 0) {
+itemQuantityError.innerHTML = "itemQuantity is required";
+return false;
+}
+if (!itemQuantity.match(/^[0-9]+$/)) {
+itemQuantityError.innerHTML = "please Enter itemQuantity";
+return false;
+}
+itemQuantityError.innerHTML = '<i class="fas fa-check-circle"></i>';
+return true;
+}
+
+
+function validateItemDescription() {
+var itemDescription = document.getElementById("itemDescription").value;
+if (itemDescription.length == 0) {
+itemDescriptionError.innerHTML = "itemDescription is required";
+return false;
+}
+if (!itemDescription.match( /^[A-Za-z]+$/)) {
+itemDescriptionError.innerHTML = "please Enter itemDescription";
+return false;
+}
+itemDescriptionError.innerHTML = '<i class="fas fa-check-circle"></i>';
+return true;
+}
+
+function validateForm() {
+if (! validateItemName() || !validateItemPrice() || !validateItemQuantity() || !validateItemDescription()) {
+submitError.style.display = "block";
+submitError.innerHTML = "Please fix to submit";
+setTimeout(function () {
+submitError.style.display = "none";
+}, 3000);
+return false;
+}
+}
+
+</script>
+
+</body>
+</html>
